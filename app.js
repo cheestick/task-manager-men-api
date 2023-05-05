@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const taskRouter = require("./routes/tasks");
-const { TASK_API_URL } = require("./utils/const");
+const { API_TASK_URL } = require("./utils/const");
 const connectDB = require("./db/connect");
 
 // middleware
@@ -13,7 +13,7 @@ app.get("/hello", (req, res) => {
   res.send("Task manager App.");
 });
 
-app.use(TASK_API_URL, taskRouter);
+app.use(API_TASK_URL, taskRouter);
 
 // server
 const PORT = process.env.PORT || 3000;
