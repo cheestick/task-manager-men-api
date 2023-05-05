@@ -4,6 +4,7 @@ const app = express();
 const taskRouter = require("./routes/tasks");
 const { API_TASK_URL } = require("./utils/const");
 const connectDB = require("./db/connect");
+const notFound = require("./middleware/not-found");
 
 // middleware
 app.use(express.static("./public"));
@@ -11,6 +12,7 @@ app.use(express.json());
 
 // routes
 app.use(API_TASK_URL, taskRouter);
+app.use(notFound);
 
 // server
 const PORT = process.env.PORT || 3000;
