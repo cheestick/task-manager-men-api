@@ -60,6 +60,9 @@ const deleteTask = async (req, res) => {
     }
 
     res.status(200).json({ task });
+    // Other Deletion Response Variants
+    //res.status(200).send();
+    //res.status(200).json({ task: null, status: "success" });
   } catch (error) {
     res.status(500).json({ msg: error });
   }
