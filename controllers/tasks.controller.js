@@ -50,7 +50,7 @@ const editTask = asyncWrapper(async (req, res) => {
     overwrite: true,
   });
 
-  if (!task) return res.status(404).json({ msg: `No task with id: ${taskID}` });
+  if (!task) return next(createCustomError(`No task with id: ${taskID}`, 404));
 
   res.status(200).json({ task });
 });
@@ -59,6 +59,7 @@ const deleteTask = asyncWrapper(async (req, res) => {
   const { id: taskID } = req.params;
   // add id to ObjectID matching check and error handling
   const task = await Task.findOneAndDelete({ _id: taskID });
+
   if (!task) return next(createCustomError(`No task with id: ${taskID}`, 404));
 
   res.status(200).json({ task });
