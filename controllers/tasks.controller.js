@@ -54,6 +54,27 @@ const updateTask = async (req, res) => {
   }
 };
 
+const editTask = async (req, res) => {
+  try {
+    const { id: taskID } = req.params;
+    // add id to ObjectID accordance check and handel appropiate error
+
+    const task = await Task.findOneAndUpdate({ _id: taskID }, req.body, {
+      new: true,
+      runValidators: true,
+      // overwrite property is false by default, so PUT=PATCH
+      // also we need to remove schema defaults to cause the errors
+      overwrite: true,
+    });
+    if (!task)
+      return res.status(404).json({ msg: `No task with id: ${taskID}` });
+
+    res.status(200).json({ task });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
+
 const deleteTask = async (req, res) => {
   try {
     const { id: taskID } = req.params;
@@ -79,5 +100,6 @@ module.exports = {
   createTask,
   getTask,
   updateTask,
+  editTask,
   deleteTask,
 };
